@@ -1,0 +1,11 @@
+steps:
+ - name: gcr.io/cloud-builders/docker
+   args: ['build', '-t', 'gcr.io/oneapp-438601/app.server:commit', '.']
+ - name: gcr.io/cloud-builders/docker
+   args: ['push', 'gcr.io/oneapp-438601/app.server:commit']
+ - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+   entrypoint: gcloud
+   args: ['run', 'deploy', 'my-service', '--image', 'gcr.io/oneapp-438601/app.server:commit', '--platform', 'managed', '--region', 'asia-south1']
+timeout: 1200s
+images: 
+ - 'gcr.io/oneapp-438601/app.server:commit' 
